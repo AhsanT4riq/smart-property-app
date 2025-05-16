@@ -1,0 +1,8 @@
+type MaintenanceRequest {
+  id: ID!
+  leaseId: ID!
+  lease: Lease!
+  description: String!
+  status: String!
+  createdAt: String!
+}

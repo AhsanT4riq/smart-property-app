@@ -1,0 +1,8 @@
+type Property {
+  id: ID!
+  name: String!
+  address: String!
+  landlordId: ID!
+  landlord: User!
+  leases: [Lease!]!
+}
