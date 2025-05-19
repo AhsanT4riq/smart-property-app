@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "mobile": {
+      "name": "smart-property-mobile",
+      "path": "mobile"
+    }
+  }
+}
