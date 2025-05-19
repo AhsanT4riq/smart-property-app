@@ -1,5 +1,13 @@
 {
-    "name": "smart-property-app",
-    "private": true
-  }
-  
+  "name": "smart-property-app",
+  "version": "1.0.0",
+  "repository": "https://github.com/AhsanT4riq/smart-property-app.git",
+  "author": "AhsanT4riq <ahsan_work@outlook.com>",
+  "license": "MIT",
+  "workspaces": [
+    "mobile",
+    "backend",
+    "shared"
+  ],
+  "private": true
+}
