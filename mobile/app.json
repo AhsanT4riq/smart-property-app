@@ -1,27 +1,22 @@
 {
   "expo": {
-    "name": "Smart Property",
-    "slug": "smart-property-mobile",
+    "name": "mobile",
+    "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "smart-property-mobile",
+    "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.ahsan-tariq.smartproperty",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "package": "com.ahsan-tariq.smartproperty"
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",
@@ -42,12 +37,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "56867ee1-ddee-4c22-8afc-e9a291e3ddeb"
-      }
     }
   }
 }
