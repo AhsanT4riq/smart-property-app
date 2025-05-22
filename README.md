@@ -1,166 +1,275 @@
-# Smart Property App Monorepo
+# Smart Property App
 
-A modern, full-stack property management solution.
+A modern property management application with a serverless backend and a cross-platform mobile frontend.
 
-- **Backend:** Node.js, Apollo Server (GraphQL), Prisma, PostgreSQL, Clerk Auth
-- **Mobile App:** React Native (Expo), Apollo Client, Clerk SDK
+## Overview
 
-Managed as a monorepo with [pnpm workspaces](https://pnpm.io/).
+Smart Property App is a comprehensive solution for property owners and managers to:
 
----
+- Manage all properties in one place
+- Track maintenance requests effortlessly
+- Monitor rental income and expenses
 
-## 📁 Project Structure
+## Project Structure
+
+This repository uses a monorepo structure to organize the codebase into focused modules.
 
 ```
 smart-property-app/
-├── pnpm-workspace.yaml
-├── backend/
-│   ├── package.json
-│   ├── prisma/
-│   ├── src/
-│   └── ...
-├── mobile/
-│   ├── package.json
-│   ├── app.json
-│   └── ...
+├── mobile/         # React Native Expo mobile app
+├── shared/         # Shared types & utilities
+├── backend/        # AWS serverless backend
+├── README.md       # Project documentation
+└── package.json    # Root package configuration
 ```
 
----
+## Tech Stack
 
-## 🚀 Getting Started
+| Component        | Technology                                      |
+| ---------------- | ----------------------------------------------- |
+| Frontend         | React Native, Expo, NativeWind, Reanimated      |
+| Backend          | AWS Lambda, DynamoDB, API Gateway, S3, SNS, SQS |
+| Authentication   | Clerk                                           |
+| State Management | React Context + Custom Hooks                    |
+| Navigation       | Expo Router                                     |
+| Styling          | NativeWind (TailwindCSS for React Native)       |
+| Build Tools      | EAS (Expo Application Services)                 |
+| Infrastructure   | AWS CDK                                         |
 
-### 1. Install Dependencies
+## Getting Started
 
-From the project root:
+### Prerequisites
+
+- Node.js (v18 or later)
+- Yarn package manager
+- AWS account
+- Clerk account
+- Expo account (for EAS builds)
+
+### Installation
+
+1. Clone the repository
 
 ```bash
-pnpm install
+git clone https://github.com/yourusername/smart-property-app.git
+cd smart-property-app
 ```
 
----
-
-### 2. Backend Setup
+2. Install dependencies
 
 ```bash
-cd backend
-cp .env.example .env              # Copy and configure your environment variables
-pnpm migrate                      # Run Prisma migrations (or: npx prisma migrate dev)
-pnpm generate                     # Generate Prisma client (or: npx prisma generate)
-pnpm dev                          # Start the backend server (GraphQL at http://localhost:4000/)
+yarn install
 ```
 
-- Requires PostgreSQL and Clerk credentials in `.env`.
-- All resolvers are protected by Clerk JWT authentication.
+## Mobile App
 
----
+The mobile app is built with React Native and Expo, providing a cross-platform solution for iOS and Android.
 
-### 3. Mobile App Setup (Expo)
+### Directory Structure
+
+```
+mobile/
+├── app/                     # Expo Router app directory
+│   ├── (auth)/              # Authentication screens
+│   ├── (tabs)/              # Main app tabs
+│   ├── property/            # Property-related screens
+│   ├── maintenance/         # Maintenance-related screens
+│   └── _layout.tsx          # Root layout with authentication
+├── components/              # Reusable UI components
+├── hooks/                   # Custom React hooks
+├── api/                     # API integration with backend
+├── utils/                   # Utility functions
+├── assets/                  # Static assets
+│   ├── images/              # App images
+│   └── fonts/               # Custom fonts
+├── constants/               # App constants
+├── styles/                  # Global styles
+├── app.json                 # Expo configuration
+├── babel.config.js          # Babel configuration
+├── global.css               # Global CSS for NativeWind
+├── package.json             # Dependencies
+└── tailwind.config.js       # TailwindCSS configuration
+```
+
+### Key Features
+
+- **Authentication**: Secure sign-in with Clerk (Google OAuth)
+- **Property Management**: Create, view, and edit properties
+- **Maintenance Tracking**: Submit and track maintenance requests
+- **Dashboard**: Overview of properties and maintenance status
+- **Offline Support**: Basic functionality when offline
+
+### Running the Mobile App
 
 ```bash
 cd mobile
-pnpm install
-pnpm expo start                   # Launch Expo DevTools for local development
+yarn start
 ```
 
-- Uses React Native + Expo for iOS and Android
-- Apollo Client for API integration
-- Clerk SDK for authentication
+For development build:
+
+```bash
+eas build --profile development --platform ios
+```
+
+## Backend
+
+The backend is built with AWS serverless services, providing a scalable and cost-effective solution.
+
+### Directory Structure
+
+```
+backend/ # Backend infrastructure and Lambda functions │ ├── bin/ # CDK application entry point │ ├── lambda/ # Lambda function handlers │ │ ├── authorizers/ # API Gateway authorizers │ │ └── handlers/ # Request handlers │ │ ├── properties/ # Property-related endpoints │ │ └── test/ # Test endpoints (development only) │ ├── lib/ # CDK stack definitions │ ├── cdk.json # CDK configuration │ ├── package.json # Backend dependencies │ └── tsconfig.json # TypeScript configuration
+
+├── bin/                       # CDK app entry point
+├── cdk.json                   # CDK configuration
+├── tsconfig.json              # TypeScript configuration
+└── package.json               # Dependencies
+```
+
+### Key Services
+
+- **API Gateway**: REST API endpoints
+- **Lambda**: Serverless function handlers
+- **DynamoDB**: NoSQL database for data storage
+- **S3**: Storage for property images and documents
+- **SNS**: Notification service
+- **SQS**: Message queue for asynchronous processing
+- **Cognito**: User authentication (integrating with Clerk)
+
+### Database Schema
+
+The backend uses the following DynamoDB tables:
+
+1. **Properties**
+
+   - Primary key: `id` (UUID)
+   - GSI: `OwnerIdIndex` (partition key: `ownerId`)
+
+2. **Tenants**
+
+   - Primary key: `id` (UUID)
+   - GSI: `PropertyIdIndex` (partition key: `propertyId`)
+
+3. **Leases**
+
+   - Primary key: `id` (UUID)
+   - GSI: `PropertyIdIndex` (partition key: `propertyId`)
+   - GSI: `TenantIdIndex` (partition key: `tenantId`)
+
+4. **MaintenanceRequests**
+   - Primary key: `id` (UUID)
+   - GSI: `PropertyIdIndex` (partition key: `propertyId`)
+   - GSI: `StatusDateIndex` (partition key: `status`, sort key: `createdAt`)
+
+### Deploying the Backend
+
+```bash
+cd backend
+yarn build
+yarn cdk deploy
+```
+
+## Shared
+
+The shared directory contains types, utilities, and other code that is used across both frontend and backend.
+
+### Directory Structure
+
+```
+shared/
+├── types/                # TypeScript interfaces
+│   ├── property.ts       # Property-related types
+│   ├── maintenance.ts    # Maintenance-related types
+│   ├── tenant.ts         # Tenant-related types
+│   ├── lease.ts          # Lease-related types
+│   └── index.ts          # Type exports
+├── utils/                # Shared utility functions
+│   ├── date.ts           # Date formatting utilities
+│   ├── validation.ts     # Validation utilities
+│   └── index.ts          # Utility exports
+├── constants/            # Shared constants
+│   ├── status.ts         # Status constants
+│   └── index.ts          # Constant exports
+├── package.json          # Dependencies
+└── tsconfig.json         # TypeScript configuration
+```
+
+## API Documentation
+
+The API is organized around REST principles:
+
+- **Authentication**: All API requests require authentication using Clerk JWT tokens
+- **Base URL**: `https://api.smartproperty.app/`
+- **Content Type**: All requests and responses use JSON format
+
+### Endpoints
+
+**Properties**
+
+- `GET /properties` - Get all properties
+- `POST /properties` - Create a new property
+- `GET /properties/{id}` - Get property details
+- `PUT /properties/{id}` - Update property
+- `DELETE /properties/{id}` - Delete property
+
+**Maintenance Requests**
+
+- `GET /maintenance` - Get all maintenance requests
+- `POST /maintenance` - Create a new maintenance request
+- `GET /maintenance/{id}` - Get maintenance request details
+- `PUT /maintenance/{id}` - Update maintenance request
+- `DELETE /maintenance/{id}` - Delete maintenance request
+
+**Tenants**
+
+- `GET /tenants` - Get all tenants
+- `POST /tenants` - Create a new tenant
+- `GET /tenants/{id}` - Get tenant details
+- `PUT /tenants/{id}` - Update tenant
+- `DELETE /tenants/{id}` - Delete tenant
+
+**Leases**
+
+- `GET /leases` - Get all leases
+- `POST /leases` - Create a new lease
+- `GET /leases/{id}` - Get lease details
+- `PUT /leases/{id}` - Update lease
+- `DELETE /leases/{id}` - Delete lease
+
+## Environment Variables
+
+### Mobile App
+
+Create a `.env` file in the mobile directory with the following variables:
+
+```
+EXPO_PUBLIC_API_URL=https://yourapi.execute-api.region.amazonaws.com/prod
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+
+### Backend
+
+The backend environment variables are managed through AWS CDK and are injected into each Lambda function as needed.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+Ahsan Tariq - ahsan_work@outlook.com
+
+Project Link: [https://github.com/yourusername/smart-property-app](https://github.com/yourusername/smart-property-app)
 
 ---
 
-### 4. Running a Development Build on Physical Device
-
-- Install [EAS CLI](https://docs.expo.dev/eas/):
-  ```bash
-  pnpm add -g eas-cli
-  ```
-- Configure EAS for your project:
-  ```bash
-  eas build:configure
-  ```
-- Set your iOS `bundleIdentifier` and Android `package` in `app.json`:
-
-  ```json
-  {
-    "expo": {
-      "ios": { "bundleIdentifier": "com.yourcompany.smartproperty" },
-      "android": { "package": "com.yourcompany.smartproperty" }
-    }
-  }
-  ```
-
-- Build and install on your device:
-  ```bash
-  eas build --platform ios --profile development
-  # or
-  eas build --platform android --profile development
-  ```
-
----
-
-### 5. Monorepo Tips
-
-- Managed by `pnpm` workspaces (`pnpm-workspace.yaml`)
-- Each app (`backend`, `mobile`) can be developed and deployed independently
-- Run scripts in a subproject with:
-  ```bash
-  pnpm --filter backend dev
-  pnpm --filter mobile expo start
-  ```
-
----
-
-## 🔑 Authentication
-
-- All GraphQL endpoints are secured with [Clerk](https://clerk.com/) JWT authentication.
-- The mobile app uses Clerk’s React Native SDK for user login and session management.
-
----
-
-## 🧩 Tech Stack
-
-- **Backend:** Node.js, TypeScript, Apollo Server, Prisma, PostgreSQL, Clerk
-- **Mobile:** React Native, Expo, Apollo Client, Clerk SDK
-- **Monorepo Tooling:** pnpm workspaces
-
----
-
-## 🛠️ Useful Commands
-
-| Command                               | Description                          |
-| ------------------------------------- | ------------------------------------ | ----------------------------------- |
-| `pnpm install`                        | Install all dependencies (root)      |
-| `pnpm --filter backend dev`           | Start backend dev server             |
-| `pnpm --filter mobile expo start`     | Start Expo dev server for mobile app |
-| `npx prisma migrate dev` (in backend) | Run DB migrations                    |
-| `npx prisma generate` (in backend)    | Generate Prisma client               |
-| `eas build:configure` (in mobile)     | Setup EAS for Expo builds            |
-| `eas build --platform ios             | android`                             | Build dev client for device testing |
-
----
-
-## 🧪 Testing
-
-- **Backend:** Use GraphQL Playground at `http://localhost:4000/` (must be authenticated)
-- **Mobile:** Use Expo Go for quick JS testing or a custom dev build for native modules and Clerk auth
-
----
-
-## 👏 Contributing
-
-1. Fork this repo
-2. Create a branch (`git checkout -b feature/my-feature`)
-3. Commit your changes (`git commit -am 'Add feature'`)
-4. Push and open a PR
-
----
-
-## 📄 License
-
-[MIT](LICENSE)
-
----
-
-## 📣 Contact
-
-For issues, feature requests, or collaboration, please open a GitHub Issue or contact the maintainer.
+© 2025 Smart Property App. All Rights Reserved.
