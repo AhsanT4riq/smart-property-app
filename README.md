@@ -119,7 +119,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Ahsan Tariq - ahsan_work@outlook.com
 
-Project Link: [https://github.com/yourusername/smart-property-app](https://github.com/yourusername/smart-property-app)
+Project Link: [https://github.com/AhsanT4riq/smart-property-app](https://github.com/AhsanT4riq/smart-property-app)
 
 ---
 
