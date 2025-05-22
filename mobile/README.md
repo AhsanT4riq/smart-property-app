@@ -1,50 +1,50 @@
-# Welcome to your Expo app 👋
+## Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The mobile app is built with React Native and Expo, providing a cross-platform solution for iOS and Android.
 
-## Get started
+### Directory Structure
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+mobile/
+├── app/                     # Expo Router app directory
+│   ├── (auth)/              # Authentication screens
+│   ├── (tabs)/              # Main app tabs
+│   ├── property/            # Property-related screens
+│   ├── maintenance/         # Maintenance-related screens
+│   └── _layout.tsx          # Root layout with authentication
+├── components/              # Reusable UI components
+├── hooks/                   # Custom React hooks
+├── api/                     # API integration with backend
+├── utils/                   # Utility functions
+├── assets/                  # Static assets
+│   ├── images/              # App images
+│   └── fonts/               # Custom fonts
+├── constants/               # App constants
+├── styles/                  # Global styles
+├── app.json                 # Expo configuration
+├── babel.config.js          # Babel configuration
+├── global.css               # Global CSS for NativeWind
+├── package.json             # Dependencies
+└── tailwind.config.js       # TailwindCSS configuration
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Key Features
 
-## Learn more
+- **Authentication**: Secure sign-in with Clerk (Google OAuth)
+- **Property Management**: Create, view, and edit properties
+- **Maintenance Tracking**: Submit and track maintenance requests
+- **Dashboard**: Overview of properties and maintenance status
+- **Offline Support**: Basic functionality when offline
 
-To learn more about developing your project with Expo, look at the following resources:
+### Running the Mobile App
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+cd mobile
+yarn start
+```
 
-## Join the community
+For development build:
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+eas build --profile development --platform ios
+```
