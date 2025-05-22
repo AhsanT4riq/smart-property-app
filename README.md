@@ -103,21 +103,6 @@ The API is organized around REST principles:
 - `PUT /leases/{id}` - Update lease
 - `DELETE /leases/{id}` - Delete lease
 
-## Environment Variables
-
-### Mobile App
-
-Create a `.env` file in the mobile directory with the following variables:
-
-```
-EXPO_PUBLIC_API_URL=https://yourapi.execute-api.region.amazonaws.com/prod
-EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-```
-
-### Backend
-
-The backend environment variables are managed through AWS CDK and are injected into each Lambda function as needed.
-
 ## Contributing
 
 1. Fork the repository

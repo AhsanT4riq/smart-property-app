@@ -48,3 +48,12 @@ For development build:
 ```bash
 eas build --profile development --platform ios
 ```
+
+### Environment Variables
+
+Create a `.env` file in the mobile directory with the following variables:
+
+```
+EXPO_PUBLIC_API_URL=https://yourapi.execute-api.region.amazonaws.com/prod
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```

@@ -62,3 +62,12 @@ cd backend
 yarn build
 yarn cdk deploy
 ```
+
+### Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+```
+CLERK_JWKS_URI=your_clerk_jwks_uri
+CLERK_SECRET_KEY=your_clerk_secret_key
+```
