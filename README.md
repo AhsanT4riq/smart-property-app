@@ -66,7 +66,7 @@ yarn install
 The API is organized around REST principles:
 
 - **Authentication**: All API requests require authentication using Clerk JWT tokens
-- **Base URL**: `https://api.smartproperty.app/`
+- **Base URL**: `https://3tahlajjnk.execute-api.ap-southeast-2.amazonaws.com/prod/`
 - **Content Type**: All requests and responses use JSON format
 
 ### Endpoints
