@@ -11,8 +11,6 @@ backend/
 ├── lambda/                    # Lambda function handlers
 │   ├── authorizers/           # Authorizer functions
 │   ├── handlers/              # Handler functions
-│   ├── handlers/properties/   # Property management functions
-│   ├── handlers/maintenance/  # Maintenance request functions
 │   └── utils/                 # Shared utilities for lambdas
 ├── bin/                       # CDK app entry point
 ├── cdk.json                   # CDK configuration
